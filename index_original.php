@@ -2,7 +2,7 @@
 	require_once("$_SERVER[DOCUMENT_ROOT]/granlibreria.php");
 	$cdb = new base();
 	$salida = "";
-	$respuesta = $cdb->seleccionar(array("titulo","id","imagen"),array(array("","estatus","=","1"),array("","padre","=","1")),array("categoria"));
+	$respuesta = $cdb->seleccionar(array("titulo","id","imagen"),array(array("","estatus","=","1"),array("and","padre","=","1")),array("categoria"));
 	if($respuesta['codigo']=="1"){
 		$mensaje = $respuesta['mensaje'];
 		for($i=0;$i<count($mensaje);$i++){
@@ -15,7 +15,6 @@
 	}else{
 		$salida .= $respuesta['mensaje'];
 	}
-	$cdb->insertar();
 	encabezado("Directorio");
 	echo $salida;
 	pie();

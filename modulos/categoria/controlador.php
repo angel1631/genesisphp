@@ -37,17 +37,44 @@
 					$respuesta['mensaje']="Eliminacion correcta";
 				break;
 			case '4':
-				$texto = $_POST['texto'];
-				$respuesta = traer_lista($texto,"titulo",array("titulo"),$tabla);
+				$texto 			= $_POST['texto'];
+				$seleccion 		= array("ca.id","ca.titulo","cate.titulo as padre");
+				$limitantes[] 	= array("","ca.titulo","like","%".$texto."%");
+				$limitantes[] 	= array("and","ca.estatus","!=","0");
+				$tabla 			= array("categoria ca LEFT OUTER JOIN categoria cate ON ca.padre = cate.id");
+				$respuesta 		= $cdb->seleccionar($seleccion,$limitantes,$tabla);
+				if($respuesta['codigo']==1){
+					$mensaje = "";
+					for($i=0;$i<count($respuesta['mensaje']);$i++){
+						$mensaje .= "<div class=\"linea_busqueda\">";
+						$mensaje .= "<label class=\"cod\">".$respuesta['mensaje'][$i]['id']."</label>";
+						$mensaje .= "<label class=\"texto\">";
+							$mensaje .= "<label>".$respuesta['mensaje'][$i]['padre']."</label>";
+							$mensaje .= "<label>".$respuesta['mensaje'][$i]['titulo']."</label>";	
+						$mensaje .="</label></div>";
+					}
+					$respuesta = array("codigo"=>"1","mensaje"=>$mensaje);
+				}
 				break;
 			case '5':
 				$codigo = $_POST['codigo'];
-				$respuesta = traer_titulo($codigo,$tabla);
+				$seleccion 		= array("ca.titulo","cate.titulo as padre");
+				$limitantes[] 	= array("","ca.id","=",$codigo);
+				$limitantes[] 	= array("and","ca.estatus","!=","0");
+				$tabla 			= array("categoria ca LEFT OUTER JOIN categoria cate ON ca.padre = cate.id");
+				$respuesta 		= $cdb->seleccionar($seleccion,$limitantes,$tabla);
+				if($respuesta['codigo']==1)
+					$respuesta['mensaje'] = $respuesta['mensaje'][0]['padre']." -- ".$respuesta['mensaje'][0]['titulo']; 
+				
 				break;
 			case '6':
 				$estructura = $_POST['estructura'];
 				$codigo		= $_POST['codigo'];
 				$respuesta 	= traer_formulario($codigo,$estructura,array($tabla));
+				break;
+			case '7':
+				$codigo 	= $_POST['codigo'];
+				$respuesta 	= array("codigo"=>"1","mensaje"=>encripta($codigo));
 				break;
 			default:
 				$respuesta = array("codigo"=>"0","mensaje"=>"Error interno");

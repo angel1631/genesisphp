@@ -1,5 +1,10 @@
 .c_productos{
 	text-align: center;
+}.c_productos a{
+	text-decoration: none !important;
+	color: black;
+}.c_productos p{
+	display: none !important;
 }
 .con_pr_vertical{
 	margin-top: 15px;

@@ -72,7 +72,7 @@ $(document).ready(function(){
 		if(db_ac.children(".descripcion-codigo").length)
 			db_ac.children(".descripcion-codigo").html(descripcion);
 		else
-			traer_datos_formulario(destino.parent().parent().parent());	
+			traer_datos_formulario(db_ac.parent().parent());	
 		$(".contenedor_buscador").html("");
 		$(".contenedor_buscador").css("display","none");
 	});
@@ -120,6 +120,9 @@ $(document).ready(function(){
 								}
 							});	
 						}
+					}if(typeof(mensaje['archivo'])!= "undefined"){
+						$("#url_archivo").val(mensaje['archivo']);
+						$("#vista_imagen").attr("src",mensaje['archivo']);
 					}	
 					puntero.children(".form-group").each(function(){
 						if($(this).children(".linea-foranea").children(".codigo_foraneo").length){

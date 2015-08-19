@@ -15,11 +15,11 @@
 		function traer_vista_miniatura(){
 			$rs = traer_productos($this->cantidad,$this->categoria,$this->orden);
 			if($this->estilo=="vertical"){
-				$this->abrir_archivo("esqueleto_horizontal.html");
+				$this->abrir_archivo("$_SERVER[DOCUMENT_ROOT]/modulos/producto/vista/esqueleto_vertical.html");
 			}
 			if($rs['codigo']==1){
 				$this->crear_productos($rs['mensaje']);
-				//$this->agregar_imagen_producto();
+				$this->agregar_imagen_producto();
 				$this->crear_vista_productos_miniatura();
 				$respuesta = $this->crear_vista_final();
 			}else
@@ -28,7 +28,7 @@
 			return $respuesta;
 		}
 		function traer_vista_grande($id){
-			$this->abrir_archivo("esqueleto_grande.html");
+			$this->abrir_archivo("$_SERVER[DOCUMENT_ROOT]/modulos/producto/vista/esqueleto_grande.html");
 			$rs = traer_productos("","","",$id);
 			if($rs['codigo']==1){
 				$this->crear_productos($rs['mensaje']);
@@ -43,29 +43,31 @@
 		function abrir_archivo($direccion){
 			$archivo = fopen($direccion, "r");
 			$str_archivo= "";
-			while(!feof($archivo)) {
-				$linea = fgets($archivo);
-				$str_archivo .=$linea;
+			if(!$archivo===false){
+				while(!feof($archivo)) {
+					$linea = fgets($archivo);
+					$str_archivo .=$linea;
+				}
+				fclose($archivo);
 			}
-			fclose($archivo);
 			$this->esqueleto_producto =  $str_archivo;
 		}
 		
 		function crear_productos($productos){
 			$datos = $productos;
 				for($i=0;$i<count($productos);$i++)
-					$this->productos[]	= new Producto($datos[$i]['id'],$datos[$i]['titulo'],$datos[$i]['descripcion'],$datos[$i]['direccion'],$datos[$i]['horarios']);
+					$this->productos[]	= new Producto($datos[$i]['id'],$datos[$i]['codigo'],$datos[$i]['titulo'],$datos[$i]['descripcion'],$datos[$i]['marca'],$datos[$i]['modelo'],$datos[$i]['categoria'],$datos[$i]['precio']);
 		}
 		function crear_vista_productos_miniatura(){
 
 			for($i=0;$i<count($this->productos);$i++){
 				$str_producto = $this->esqueleto_producto;
-				$str_producto = str_replace("id_producto", modifica_numero($this->productos[$i]->id), $str_producto);
+				$str_producto = str_replace("id_producto", encripta($this->productos[$i]->id), $str_producto);
 				$str_producto = str_replace("Titulo Producto", $this->productos[$i]->titulo, $str_producto);
-				$str_producto = str_replace("Descripcion Producto", $this->productos[$i]->descripcion, $str_producto);
-				$str_producto = str_replace("Direccion Producto", $this->productos[$i]->direccion, $str_producto);
-				$str_producto = str_replace("Horarios Producto", $this->productos[$i]->horarios, $str_producto);
+				$str_producto = str_replace("Informacion Producto", $this->productos[$i]->descripcion, $str_producto);
 				$str_producto = str_replace("Imagen Principal", $this->crear_string_imagen($this->productos[$i]), $str_producto);
+				$str_producto = str_replace("Precio Producto", "Q. ".number_format($this->productos[$i]->precio, 2, '.', ','), $str_producto);
+				
 				$this->productos[$i]->set_vista($str_producto);
 			}
 		}
@@ -73,10 +75,13 @@
 
 			for($i=0;$i<count($this->productos);$i++){
 				$str_producto = $this->esqueleto_producto;
-				$str_producto = str_replace("id_producto", modifica_numero($this->productos[$i]->id), $str_producto);
+				$str_producto = str_replace("id_producto", desencripta($this->productos[$i]->id), $str_producto);
 				$str_producto = str_replace("Titulo Producto", $this->productos[$i]->titulo, $str_producto);
-				$str_producto = str_replace("Introduccion Producto", $this->productos[$i]->introduccion, $str_producto);
-				$str_producto = str_replace("Informacion Producto", $this->productos[$i]->informacion, $str_producto);
+				$str_producto = str_replace("Codigo Producto", $this->productos[$i]->codigo, $str_producto);
+				$str_producto = str_replace("Marca Producto", $this->productos[$i]->marca, $str_producto);
+				$str_producto = str_replace("Modelo Producto", $this->productos[$i]->modelo, $str_producto);
+				$str_producto = str_replace("Detalle Producto", $this->productos[$i]->descripcion, $str_producto);
+				
 				$str_producto = str_replace("Precio Producto", "Q. ".number_format($this->productos[$i]->precio, 2, '.', ','), $str_producto);
 				$str_producto = str_replace("Imagen Principal", $this->crear_string_imagen($this->productos[$i]), $str_producto);
 				$this->productos[$i]->set_vista($str_producto);
@@ -111,13 +116,16 @@
 		}
 	}
 	Class Producto{
-		public $vista, $id, $titulo, $descripcion, $direccion, $horarios, $imagenes;
-		function __construct($id, $titulo, $descripcion, $direccion, $horarios){
+		public $vista, $id, $titulo, $descripcion, $marca, $modelo, $categoria, $precio, $imagenes;
+		function __construct($id, $codigo, $titulo, $descripcion, $marca, $modelo, $categoria, $precio){
 			$this->id 			= $id;
+			$this->codigo		= $codigo;
 			$this->titulo 		= $titulo;
 			$this->descripcion 	= $descripcion;
-			$this->direccion 	= $direccion;
-			$this->horarios 	= $horarios;
+			$this->marca 	 	= $marca;
+			$this->modelo 		= $modelo;
+			$this->categoria 	= $categoria;
+			$this->precio 		= $precio;
 		}
 		function set_imagenes($ar){
 			$this->imagenes = $ar;
@@ -128,10 +136,10 @@
 	}
 	function traer_productos($cantidad = "", $categoria = "", $orden = "", $id = ""){
 		$cdb = new base();
-		$seleccion = array("id","titulo","descripcion","direccion","horarios");
+		$seleccion = array("id", "codigo", "titulo", "descripcion", "marca", "modelo", "categoria", "precio");
 		$limitantes = array(array("","estatus","=","1"));
 		if($categoria!="")
-			$limitantes[] = array("and","catalogo","=",$categoria);
+			$limitantes[] = array("and","categoria","=",$categoria);
 		if($id!="")
 			$limitantes[] = array("and","id","=",$id);
 		if($orden!="")
@@ -139,7 +147,7 @@
 		if($cantidad!="")
 			$cdb->set_cantidad($this->cantidad);
 		
-		$tabla = array("negocio");
+		$tabla = array("producto");
 		$respuesta = $cdb->seleccionar($seleccion,$limitantes,$tabla);
 		return $respuesta;
 	}

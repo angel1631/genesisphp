@@ -8,18 +8,12 @@ $(document).ready(function(){
 		acc = $(this).attr("acc");
 		$.traer_vista_formulario();
 	});
-	$.traer_vista_formulario = function(){
-		$(".formulario").load("http://"+root+"/modulos/"+pt+"/vista.php",{acc: acc},function(){
-			if(acc==1)
-				$(".codigo_principal").parent().parent().css("display","none");
-		});
-	}
 	$("body").on("click",".boton_ejecutar", function(){
 		cf			= $(this).parent();
 		tb_activo 	= cf.attr('tb');
 		if(acc=='0')
 			acc = cf.attr("acc");
-		var dt_json = JSON.stringify(extraer_datos_formulario(cf));
+		var dt_json = JSON.stringify($.extraer_datos_formulario(cf));
 		if(acc==1){
 			enviar 	= {datos: dt_json, acc: acc};	
 		}else{
@@ -32,6 +26,51 @@ $(document).ready(function(){
 		$.ajax({
 			type: 'POST',
 			data: enviar,
+			url: 'http://'+root+'/modulos/'+tb_activo+'/controlador.php',
+			dataType: 'json',
+			success: function(res){
+				if(res.codigo==1){
+					alert(res.mensaje);
+					cf.parent().html("");
+				}else
+					alert(res.mensaje);
+			}
+		});
+	});
+	$("body").on("click",".boton_ejecutar_form_archivo", function(){
+		cf			= $(this).parent();
+		tb_activo 	= cf.attr('tb');
+		formdata = new FormData();
+		if(acc=='0')
+			acc = cf.attr("acc");
+		
+		var dt_json = JSON.stringify($.extraer_datos_formulario(cf));
+		if(acc==1){
+			formdata.append("datos",dt_json);
+			formdata.append("acc",acc);
+			var inputFileImage = document.getElementById("archivo");
+			var file = inputFileImage.files[0];
+			formdata.append("archivo",file);
+			
+		}else{
+			if(acc==2){
+				formdata.append("datos",dt_json);
+				formdata.append("acc",acc);
+				var inputFileImage = document.getElementById("archivo");
+				var file = inputFileImage.files[0];
+				formdata.append("archivo",file);
+				formdata.append("codigo",cf.children(".form-group").children(".con_codigo").children(".codigo_principal").val());
+				
+			}else{
+				formdata.append("acc",acc);
+				formdata.append("codigo",cf.children(".form-group").children(".con_codigo").children(".codigo_principal").val());
+				
+			}
+		}
+		
+		$.ajax({
+			type: 'POST',
+			data: formdata,
 			url: 'http://'+root+'/modulos/'+tb_activo+'/controlador.php',
 			cache: false,
             contentType: false,
@@ -46,7 +85,14 @@ $(document).ready(function(){
 			}
 		});
 	});
-	function extraer_datos_formulario(formulario){
+	$.traer_vista_formulario = function(){
+		$(".formulario").load("http://"+root+"/modulos/"+pt+"/vista.php",{acc: acc},function(){
+			if(acc==1)
+				$(".codigo_principal").parent().parent().css("display","none");
+		});
+	}
+	
+	$.extraer_datos_formulario = function(formulario){
 		arr_datos 	= {};
 		contenedor_foranea_multiple = {}
 		y			= 0;
