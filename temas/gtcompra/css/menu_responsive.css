@@ -1,0 +1,19 @@
+@media screen and (max-width:700px){
+	.contenedor_opcion_principal {
+		width: 100%;
+		text-align: center;
+		margin-left: 0px !important;
+
+	}.contenedor_opcion_principal li{
+		border-bottom:3px solid rgb(50,50,50) !important;
+		margin-top: inherit !important;
+		height: 45px;
+		line-height: 45px;
+		color: black !important;
+		font-size: 1em !important;
+	}
+	.contenedor_opcion_principal li a{
+		
+	}
+}
+

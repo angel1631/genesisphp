@@ -1,0 +1,142 @@
+.c_productos{
+	text-align: center;
+}
+.con_pr_vertical{
+	margin-top: 15px;
+	width: 24%;
+	min-width: 200px;
+	max-width: 300px; 
+	display: inline-block;
+	background: rgba(245,245,245);
+	box-shadow: 0 0 10px rgba(0,0,0,0.3);
+	margin-left: 1%;
+	vertical-align: top;
+	color: rgb(45,45,45);
+}.con_pr_vertical .imagen_principal_producto{
+	width: 96%;
+	margin-left: 2%;
+}.con_pr_vertical .imagen_principal_producto img{
+	max-width: 100%;
+}.con_pr_vertical .titulo_producto{
+	width: 100%;
+	margin-top: 25px;
+	padding-bottom: 5px;
+	text-align: left;
+	color: rgb(45,45,45);
+	border-bottom: 3px double rgb(45,45,45);
+	font-weight: bold;
+}.con_pr_vertical .informacion_producto{
+	text-align: justify;
+	margin-top: 20px;
+}
+.con_pr_vertical .contenedor_data_producto{
+	width: 96%;
+	margin-left: 2%;
+	
+}
+.contenedor_producto_horizontal{
+	margin-top: 45px;
+	width: 100%;
+	position: relative;
+	background: url(http://solucionclic.com/apariencia/background_producto.jpg);
+	box-shadow: -5px -5px 5px rgba(0,0,0,0.3); 
+}.contenedor_producto_horizontal .contenedor_data_producto{
+	padding-top: 2em;
+	width: 52%;
+	padding-left: 1%;
+	padding-right: 1%;
+	display: inline-block;
+	vertical-align: top;
+	box-shadow: 0 7px 5px -5px rgba(0,0,0,0.5);
+	color: white;
+}.contenedor_producto_horizontal .titulo_producto{
+	width: 100%;
+	font-family: 'Kaushan Script', cursive;
+	font-size: 2em;
+}.contenedor_producto_horizontal .titulo_producto img{
+	max-width: 100%;
+}.contenedor_producto_horizontal .informacion_producto{
+	width: 100%;
+	margin-top: 25px;
+}.contenedor_producto_horizontal .imagen_pie{
+	width: 100%;
+	margin-top: 75px;
+}.contenedor_producto_horizontal .imagen_pie img{
+	max-width: 100%;
+}.contenedor_producto_horizontal .video_producto{
+	width: 100%;
+	text-align: center;
+}.contenedor_producto_horizontal .slide_producto{
+	width: 45%;
+	max-width: 400px;
+	display: inline-block;
+	text-align: center;
+    border-radius: 50%;
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.5);
+    overflow: hidden;
+    background: rgba(255,255,255,0.4);
+}.contenedor_producto_horizontal .slide_producto img{
+	max-width: 100%;
+}#contenido_principal{
+	width: 100%;
+}.left_producto, .right_producto{
+	width: 48%;
+	min-width: 240px;
+	left: 1%;
+	vertical-align: top;
+	display: inline-block;
+}.left_producto{
+	text-align: justify;
+}.right_producto{
+	text-align: center;
+}.left_producto .titulo_producto{
+	width: 100%;
+	margin-top: 25px;
+	padding-bottom: 5px;
+	text-align: left;
+	color: rgb(45,45,45);
+	border-bottom: 3px double rgb(45,45,45);
+	font-weight: bold;
+}.left_producto .informacion_producto, .left_producto .introduccion_producto{
+	width: 90%;
+	margin-left: 3%;
+	background: rgb(230,230,240);
+	border-radius: 10px;
+	padding: 1%;
+	margin-top: 15px;
+	margin-bottom: 15px;
+}.right_producto .imagen_principal_producto{
+	width: 100%;
+}.right_producto img{
+	max-width: 100%;
+}.left_producto .subtitulo{
+	font-weight: bold;
+	
+	width: 100%;
+	margin-top: 25px;
+	display: block;
+}
+@media screen and (max-width:500px){
+	.con_pr_vertical{
+		width: 100%;
+	}
+	.contenedor_producto_horizontal{
+		box-shadow: 0 0 0 rgba(0,0,0,0);
+		margin-top: 3em;
+		background: rgba(0,0,0,0);
+	}  
+	.contenedor_producto_horizontal .contenedor_data_producto{
+		padding-top: 1em;
+		width: 98%;
+		background: rgb(240,240,240);
+		color: black;
+		margin-bottom: 3em;
+		
+	}.slide_producto{
+		margin-left: 15%;
+		width: 70%;
+		box-shadow: 0 0 5px rgba(0,0,0,0.5);
+	}.left_producto, .right_producto{
+		width: 100%;
+	}
+}

@@ -1,0 +1,1 @@
+Es la carpeta principal y contiene toda la estructura general y basica de todo software que desarrolla solucion clic

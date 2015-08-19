@@ -1,0 +1,1 @@
+carpeta que contiene todo lo relacionado con la apariencia del sitio por ejemplo css, js, imagenes

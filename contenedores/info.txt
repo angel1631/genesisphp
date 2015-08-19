@@ -1,0 +1,2 @@
+Contiene todas las paginas o estructuras que serviran como esqueleto para mostrar alguna otra cosa por ejemplo, articulos, imagenes, modulos, paginas
+Estos conentedores tienen un esqueleto pero no una vista.

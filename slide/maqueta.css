@@ -1,0 +1,33 @@
+#slide_principal{
+	width: 100%;
+	position: relative;	
+}
+.con_tit, .con_des{
+	height: 20%;
+	color: rgb(139,0,0);
+	position: absolute;
+	font-family: 'Museo500', normal;
+	width: 100%;
+}
+.con_tit {
+	top: 0px;
+	text-align: left;
+	font-size: 2.5em;
+	
+}.con_des{
+	bottom: 0;
+	background: rgba(255,255,255,0.3);
+	font-size: 1.4em;
+	-ms-display: flex;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+@media screen and (max-width:500px){ 
+	.con_tit{
+		font-size: 2em;
+	}.con_des{
+		font-size: 0.8em;
+	}
+}
+			

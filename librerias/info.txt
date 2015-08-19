@@ -1,0 +1,2 @@
+Contiene todas las librerias, funciones o clases que se usan generalmente o que son las que utiliza todo el software.
+en propias estan las desarrolladas por solucionclic y en externas las desarrolladas por terceros

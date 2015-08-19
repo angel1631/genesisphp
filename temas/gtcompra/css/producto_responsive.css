@@ -1,0 +1,14 @@
+@media screen and (max-width:500px){
+	.con_pr_horizontal{
+		width: 90% !important;
+	}
+}
+@media screen and (max-width:900px){
+	.contenedor_data_producto{
+		width: 96% !important;
+		margin-left: 2% !important;
+		margin-top: 25px !important;
+	}.slide_producto{
+		margin-left: 30%;
+	}
+}

@@ -1,0 +1,18 @@
+nav{
+	height: 80px;
+}nav .contenedor_opcion_principal{
+	height: 90%;
+	margin-left: 1%;
+	display: inline-block;
+}nav .contenedor_opcion_principal li{
+	list-style: none;
+	display: block;
+	margin-top: 35px;
+	border-bottom: 3px solid white;
+	color: white;
+	font-size: 1.5em;
+}
+	
+}nav .contenedor_opcion_principal li a:hover{
+	text-decoration: none;
+}
