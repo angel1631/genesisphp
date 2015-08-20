@@ -1,8 +1,9 @@
-nav{
-	height: 80px;
-	
-}
-
+<nav><?php
+	require_once("traer_opciones_menu.php");
+	echo traer_opciones_menu();
+?>
+</nav>
+<style type="text/css">
 * {
 font-family:sans-serif;
 list-style:none;
@@ -12,18 +13,15 @@ padding:0;
 }
  
 .nav > li {
-	margin-top: 35px;
-	float:left;
-
+float:left;
 }
  
 .nav li a {
-background: rgb(151,202,65);
+background:#0c9ba0;
 color:#FFF;
 display:block;
-border-bottom: 2px solid white; 
+border:1px solid;
 padding:10px 12px;
-
 }
  
 .nav li a:hover {
@@ -33,8 +31,6 @@ background:#0fbfc6;
 display:none;
 position:absolute;
 min-width:140px;
-z-index: 3;
-box-shadow: 5px 5px 5px rgba(45,45,45,0.5);
 }
 .nav li:hover > ul {
 display:block;
@@ -47,3 +43,4 @@ position:relative;
 right:-140px;
 top:0;
 }
+</style>

@@ -1,5 +1,6 @@
 <?php 
 	require_once("$_SERVER[DOCUMENT_ROOT]/granlibreria.php");
+	require_once("$_SERVER[DOCUMENT_ROOT]/modulos/menu/traer_opciones_menu.php");
 function encabezado($titulo,$acceso = ""){
 	if($acceso ==""){
 		$cdb 	= new base();
@@ -17,6 +18,7 @@ function encabezado($titulo,$acceso = ""){
 	}
 	$notificacion = "<div class=sintio_notificacion><input id=correo_usuario type=text placeholder=\"Inscribete ingresando tu correo\" /><input id=enviar_suscripcion type=button value=Enviar></div>";
 	$documento = str_replace("Titulo Pagina", $titulo, $documento);
+	$documento = str_replace("Menu Pagina", traer_opciones_menu(), $documento);
 	echo $documento;
 	if(!isset($_GET['ds']))
 		echo $notificacion;
