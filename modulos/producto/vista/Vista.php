@@ -136,18 +136,19 @@
 	}
 	function traer_productos($cantidad = "", $categoria = "", $orden = "", $id = ""){
 		$cdb = new base();
-		$seleccion = array("id", "codigo", "titulo", "descripcion", "marca", "modelo", "categoria", "precio");
-		$limitantes = array(array("","estatus","=","1"));
+		$seleccion = array("p.id", "p.codigo", "p.titulo", "p.descripcion", "m.titulo marca", "p.modelo", "p.categoria", "p.precio");
+		$limitantes[] = array("","p.estatus","=","1");
+		$limitantes[] = array("and","p.marca","=","m.id");
 		if($categoria!="")
-			$limitantes[] = array("and","categoria","=",$categoria);
+			$limitantes[] = array("and","p.categoria","=",$categoria);
 		if($id!="")
-			$limitantes[] = array("and","id","=",$id);
+			$limitantes[] = array("and","p.id","=",$id);
 		if($orden!="")
 			$cdb->set_referencia($this->orden);
 		if($cantidad!="")
 			$cdb->set_cantidad($this->cantidad);
 		
-		$tabla = array("producto");
+		$tabla = array("producto p","marca m");
 		$respuesta = $cdb->seleccionar($seleccion,$limitantes,$tabla);
 		return $respuesta;
 	}
